@@ -1,0 +1,84 @@
+//  main.cpp
+//  solution.cpp
+//  Created by Naman Tiwari on 14/09/20.
+//  Copyright © 2020 Naman Tiwari. All rights reserved.
+#include<bits/stdc++.h>
+using namespace std;
+#define fo(i,n) for(int i=0;i<n;i++)
+#define foo(i,n) for(int i=1;i<=n;i++)
+#define Fo(i,k,n) for(i=k;k<n?i<n:i>n;k<n?i+=1:i-=1)
+#define ll long long
+#define lli long long int
+#define pb push_back
+#define mp make_pair
+#define F first
+#define S second
+#define all(x) x.begin(), x.end()
+#define clr(x) memset(x, 0, sizeof(x))
+#define sortall(x) sort(all(x))
+#define tr(it, a) for(auto it = a.begin(); it != a.end(); it++)
+#define TC int tc; cin>>tc; for(int cn=1; cn<=tc; ++cn)
+typedef pair<int, int>    pii;
+typedef pair<ll, ll>      pl;
+typedef vector<int>       vi;
+typedef vector<ll>        vl;
+typedef vector<pii>       vpii;
+typedef vector<pl>        vpl;
+typedef vector<vi>        vvi;
+typedef vector<vl>        vvl;
+
+#define mod 1000000007;
+lli ar[3];
+lli I[3][3],T[3][3];
+void mul(lli A[3][3],lli B[3][3],int dim){
+    lli result[dim+1][dim+1];
+    foo(i,dim){
+        foo(j,dim){
+            result[i][j]=0;
+            foo(k,dim){
+                lli x=(A[i][k]*B[k][j])%mod;
+                result[i][j] =(result[i][j]+x)%mod;
+            }
+        }
+    }
+    foo(i,dim){
+        foo(j,dim){
+            A[i][j]=result[i][j];
+        }
+    }
+}
+lli getfib(int n){
+    if(n<=2){
+        return ar[n];
+    }
+    I[1][1]=I[2][2]=1;
+    I[1][2]=I[2][1]=0;
+    
+    T[1][1]=0;
+    T[1][2]=T[2][1]=T[2][2]=1;
+    
+    n=n-1;
+    while(n){
+        if(n%2){
+         mul(I,T,2);
+            n--;
+        }
+        else{
+              mul(T,T,2);
+           n= n/2;
+        }
+    }
+    lli x=(ar[1]*I[1][1]+ar[2]*I[2][1])%mod;
+    return x;
+}
+
+int main(){
+    int t,n;
+    cin>>t;
+    while(t--){
+        cin>> ar[1]>>ar[2]>>n;
+        n++;
+       cout<< getfib(n)<<endl;
+        
+    }
+}
